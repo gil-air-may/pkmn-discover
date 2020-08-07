@@ -10,7 +10,7 @@ const App = () => {
   const [input, setInput] = useState("");
   const [correctScore, setCorrectScore] = useState(0);
   const [wrongScore, setWrongScore] = useState(0);
-  
+  const [timer, setTimer] = useState(30);
 
   const fetchPokemon = async () => {
     const response = await selectRandomGen1();
@@ -18,6 +18,26 @@ const App = () => {
 
     setPokemon(pokemon);
   };
+
+  const tick = () => {
+    const counter = setTimeout(() => setTimer(timer - 1), 1000);
+    if (timer === 0) {
+      clearTimeout(counter);
+    }
+  };
+
+  const resetGame = () => {
+    setTimer(30);
+    setWrongScore(0);
+    setCorrectScore(0);
+    setInput("");
+    tick();
+    fetchPokemon();
+  };
+
+  useEffect(() => {
+    tick();
+  }, [timer]);
 
   useEffect(() => {
     fetchPokemon();
@@ -44,16 +64,20 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
+        <h1>{timer}</h1>
         <p>Acertos {correctScore}</p>
         <p>Erros {wrongScore}</p>
-
+        {timer === 0 ? (
+          <button onClick={resetGame}>Try Again</button>
+        ) : (
+          <input
+            type="text"
+            value={input}
+            onChange={handleInput}
+            onKeyUp={handleEnter}
+          />
+        )}
         {pokemon && <Card pokemon={pokemon} />}
-        <input
-          type="text"
-          value={input}
-          onChange={handleInput}
-          onKeyUp={handleEnter}
-        />
       </header>
     </div>
   );
