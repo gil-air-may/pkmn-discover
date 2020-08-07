@@ -7,6 +7,7 @@ import "./App.css";
 
 const App = () => {
   const [pokemon, setPokemon] = useState(undefined);
+  const [input, setInput] = useState("");
 
   const fetchPokemon = async () => {
     const response = await selectRandomGen1();
@@ -19,11 +20,26 @@ const App = () => {
     fetchPokemon();
   }, []);
 
+  const handleInput = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleEnter = (e) => {
+    if(e.keyCode === 13){
+      if(input === pokemon.name){
+        console.log('ACERTOUUU')
+      }else{
+        console.log('ERRROU =c')
+      }
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         {pokemon && <h2 style={{ color: "white" }}>{pokemon.name}</h2>}
         {pokemon && <Card pokemon={pokemon} />}
+        <input type="text" value={input} onChange={handleInput} onKeyUp={handleEnter} />
       </header>
     </div>
   );
