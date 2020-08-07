@@ -8,6 +8,7 @@ const Card = ({ pokemon }) => {
   //console.log(data);
   return (
     <CardStyled bgColor={data.vibrant}>
+     <p>{pokemon.name}</p>
       <img style={{ width: "300px" }} src={pokemon.sprites.front_default} />
     </CardStyled>
   );
