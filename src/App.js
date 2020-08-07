@@ -22,6 +22,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
+        {pokemon && <h2 style={{ color: "white" }}>{pokemon.name}</h2>}
         {pokemon && <Card pokemon={pokemon} />}
       </header>
     </div>
