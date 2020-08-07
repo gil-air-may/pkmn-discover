@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { selectRandomGen1 } from "./api";
-import Card from "./components/card";
+import Card from "./components/Card";
 
 import "./App.css";
 
