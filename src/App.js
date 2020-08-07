@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import "./App.css";
-
 import { selectRandomGen1 } from "./api";
+import Card from "./components/card";
+
+import "./App.css";
 
 const App = () => {
   const [pokemon, setPokemon] = useState(undefined);
@@ -21,9 +22,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {pokemon && (
-          <img style={{ width: "30%" }} src={pokemon.sprites.front_default} />
-        )}
+        {pokemon && <Card pokemon={pokemon} />}
       </header>
     </div>
   );
