@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { selectRandomGen1 } from "./api";
 import Card from "./components/Card";
+import { resetGame, addNewPokemon, submitName } from "./redux/actions";
 
 import "./App.css";
 
 const App = () => {
-  const [pokemon, setPokemon] = useState(undefined);
   const [input, setInput] = useState("");
-  const [correctScore, setCorrectScore] = useState(0);
-  const [wrongScore, setWrongScore] = useState(0);
   const [timer, setTimer] = useState(30);
 
-  const fetchPokemon = async () => {
-    const response = await selectRandomGen1();
-    const pokemon = response.data;
-
-    setPokemon(pokemon);
-  };
+  const dispatch = useDispatch();
+  const [correctScore, wrongScore, highScore] = useSelector(({ player }) => [
+    player.correctScore,
+    player.wrongScore,
+    player.highScore,
+  ]);
 
   const tick = () => {
     const counter = setTimeout(() => setTimer(timer - 1), 1000);
@@ -26,13 +24,11 @@ const App = () => {
     }
   };
 
-  const resetGame = () => {
+  const resetAllGame = () => {
     setTimer(30);
-    setWrongScore(0);
-    setCorrectScore(0);
     setInput("");
+    dispatch(resetGame());
     tick();
-    fetchPokemon();
   };
 
   useEffect(() => {
@@ -40,7 +36,7 @@ const App = () => {
   }, [timer]);
 
   useEffect(() => {
-    fetchPokemon();
+    dispatch(addNewPokemon());
   }, []);
 
   const handleInput = (e) => {
@@ -49,15 +45,8 @@ const App = () => {
 
   const handleEnter = (e) => {
     if (e.keyCode === 13) {
-      fetchPokemon();
+      dispatch(submitName(input));
       setInput("");
-      if (input.toLowerCase() === pokemon.name) {
-        console.log("ACERTOUUU");
-        setCorrectScore(correctScore + 1);
-      } else {
-        setWrongScore(wrongScore + 1);
-        console.log("ERRROU =c");
-      }
     }
   };
 
@@ -67,8 +56,9 @@ const App = () => {
         <h1>{timer}</h1>
         <p>Acertos {correctScore}</p>
         <p>Erros {wrongScore}</p>
+        <p>Melhor pontuação: {highScore}</p>
         {timer === 0 ? (
-          <button onClick={resetGame}>Try Again</button>
+          <button onClick={resetAllGame}>Try Again</button>
         ) : (
           <input
             type="text"
@@ -77,7 +67,7 @@ const App = () => {
             onKeyUp={handleEnter}
           />
         )}
-        {pokemon && <Card pokemon={pokemon} />}
+        <Card />
       </header>
     </div>
   );

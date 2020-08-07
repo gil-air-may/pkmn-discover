@@ -1,14 +1,25 @@
 import React from "react";
 import { usePalette } from "react-palette";
+import { useSelector } from "react-redux";
+
 import { CardStyled } from "./styles";
 
-const Card = ({ pokemon }) => {
-  const { data, loading, error } = usePalette(pokemon.sprites.front_default);
+const defaultImg =
+  "https://www.vippng.com/png/full/257-2570870_pokemon-pokeball-pokemon-master-ball-pixel-art.png";
 
-  //console.log(data);
+const Card = () => {
+  const pokemon = useSelector(({ pokemons }) => pokemons[pokemons.length - 1]);
+  const { data } = usePalette(
+    pokemon ? pokemon.sprites.front_default : defaultImg
+  );
+
+  if (!pokemon) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <CardStyled bgColor={data.vibrant}>
-     <p>{pokemon.name}</p>
+      <p>{pokemon.name}</p>
       <img style={{ width: "300px" }} src={pokemon.sprites.front_default} />
     </CardStyled>
   );
