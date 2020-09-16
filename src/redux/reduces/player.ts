@@ -5,7 +5,17 @@ const defaultState = {
   highScore: getHighScore(),
 };
 
-const reducer = (state = defaultState, action) => {
+enum ActionType {
+  INCREASE_CORRECT_SCORE,
+  INCREASE_WRONG_SCORE,
+  RESET_PLAYER,
+}
+
+interface PlayerActionShape {
+  type: keyof typeof ActionType;
+}
+
+const reducer = (state = defaultState, action: PlayerActionShape) => {
   switch (action.type) {
     case "INCREASE_CORRECT_SCORE":
       const newScore = state.correctScore + 1;
