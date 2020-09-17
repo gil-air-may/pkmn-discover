@@ -5,17 +5,28 @@ const defaultState = {
   highScore: getHighScore(),
 };
 
-enum ActionType {
-  INCREASE_CORRECT_SCORE,
-  INCREASE_WRONG_SCORE,
-  RESET_PLAYER,
+export const INCREASE_CORRECT_SCORE = "INCREASE_CORRECT_SCORE";
+export const INCREASE_WRONG_SCORE = "INCREASE_WRONG_SCORE";
+export const RESET_PLAYER = "RESET_PLAYER";
+
+export interface IncreaseCorrectScore {
+  type: typeof INCREASE_CORRECT_SCORE;
 }
 
-interface PlayerActionShape {
-  type: keyof typeof ActionType;
+export interface IncreaseWrongScore {
+  type: typeof INCREASE_WRONG_SCORE;
 }
 
-const reducer = (state = defaultState, action: PlayerActionShape) => {
+export interface ResetPlayer {
+  type: typeof RESET_PLAYER;
+}
+
+export type PlayerAction =
+  | ResetPlayer
+  | IncreaseCorrectScore
+  | IncreaseWrongScore;
+
+const reducer = (state = defaultState, action: PlayerAction) => {
   switch (action.type) {
     case "INCREASE_CORRECT_SCORE":
       const newScore = state.correctScore + 1;

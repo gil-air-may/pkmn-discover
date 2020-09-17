@@ -1,21 +1,22 @@
-type PokemonShape = { id: number };
+export const ADD_NEW_POKEMON = "ADD_NEW_POKEMON";
+export const RESET_POKEMON = "RESET_POKEMON";
 
-enum ActionType {
-  ADD_NEW_POKEMON,
-  RESET_POKEMON,
-}
+type PokemonShape = { id: number; name: string };
 
-const defaultState: PokemonShape[] = [];
-
-interface PokemonActionShape {
-  type: keyof typeof ActionType;
+export interface AddNewPokemon {
+  type: typeof ADD_NEW_POKEMON;
   payload: { pokemon: PokemonShape };
 }
 
-export const pokemonReducer = (
-  state = defaultState,
-  action: PokemonActionShape
-) => {
+export interface ResetPokemon {
+  type: typeof RESET_POKEMON;
+}
+
+export type PokemonAction = AddNewPokemon | ResetPokemon;
+
+const defaultState: PokemonShape[] = [];
+
+export const pokemonReducer = (state = defaultState, action: PokemonAction) => {
   switch (action.type) {
     case "ADD_NEW_POKEMON":
       return [...state, action.payload.pokemon];
