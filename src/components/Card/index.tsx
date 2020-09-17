@@ -2,13 +2,16 @@ import React from "react";
 import { usePalette } from "react-palette";
 import { useSelector } from "react-redux";
 
+import { Pokemon } from "../../redux/actions/pokemons";
 import { CardStyled } from "./styles";
 
 const defaultImg =
   "https://www.vippng.com/png/full/257-2570870_pokemon-pokeball-pokemon-master-ball-pixel-art.png";
 
-const Card = () => {
-  const pokemon = useSelector(({ pokemons }) => pokemons[pokemons.length - 1]);
+const Card: React.FC = () => {
+  const pokemon = useSelector(
+    ({ pokemons }: { pokemons: Pokemon[] }) => pokemons[pokemons.length - 1]
+  );
   const { data } = usePalette(
     pokemon ? pokemon.sprites.front_default : defaultImg
   );

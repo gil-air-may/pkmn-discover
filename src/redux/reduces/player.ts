@@ -1,11 +1,12 @@
 import { getHighScore } from "../actions/helper";
+import { PlayerAction } from "../actions/player";
 const defaultState = {
   correctScore: 0,
   wrongScore: 0,
   highScore: getHighScore(),
 };
 
-const reducer = (state = defaultState, action) => {
+const reducer = (state = defaultState, action: PlayerAction) => {
   switch (action.type) {
     case "INCREASE_CORRECT_SCORE":
       const newScore = state.correctScore + 1;

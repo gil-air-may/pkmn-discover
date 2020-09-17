@@ -1,6 +1,8 @@
-const defaultState = [];
+import { PokemonAction, Pokemon } from "../actions/pokemons";
 
-const reducer = (state = defaultState, action) => {
+const defaultState: Pokemon[] = [];
+
+const reducer = (state = defaultState, action: PokemonAction) => {
   switch (action.type) {
     case "ADD_NEW_POKEMON":
       return [...state, action.payload.pokemon];

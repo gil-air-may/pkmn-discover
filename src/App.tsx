@@ -3,18 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Card from "./components/Card";
 import { resetGame, addNewPokemon, submitName } from "./redux/actions";
+import { RootStoreType } from "./redux/store/index";
 
 import "./App.css";
 
 const App = () => {
   const [input, setInput] = useState("");
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState<number>(30);
 
   const dispatch = useDispatch();
-  const [correctScore, wrongScore, highScore] = useSelector(({ player }) => [
-    player.correctScore,
-    player.wrongScore,
-    player.highScore,
+  const [
+    correctScore,
+    wrongScore,
+    highScore,
+  ] = useSelector((state: RootStoreType) => [
+    state.player.correctScore,
+    state.player.wrongScore,
+    state.player.highScore,
   ]);
 
   const tick = () => {
@@ -39,11 +44,11 @@ const App = () => {
     dispatch(addNewPokemon());
   }, []);
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
-  const handleEnter = (e) => {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13) {
       dispatch(submitName(input));
       setInput("");
