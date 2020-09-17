@@ -56,17 +56,17 @@ const App = () => {
         <h1>{timer}</h1>
         <p>Acertos {correctScore}</p>
         <p>Erros {wrongScore}</p>
-        <p>Melhor pontuação: {highScore}</p>
+        <p>High Score: {highScore}</p>
         {timer === 0 ? (
           <button onClick={resetAllGame}>Try Again</button>
         ) : (
-          <input
-            type="text"
-            value={input}
-            onChange={handleInput}
-            onKeyUp={handleEnter}
-          />
-        )}
+            <input
+              type="text"
+              value={input}
+              onChange={handleInput}
+              onKeyUp={handleEnter}
+            />
+          )}
         <Card />
       </header>
     </div>
